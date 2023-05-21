@@ -24,7 +24,7 @@
             if($password != $confirm_password)
             {
                 echo "<script>
-                        alert('Password is incorrect.')
+                        alert('Password and confirm password must be same.')
                     </script>
                     ";
             }

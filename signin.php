@@ -20,6 +20,13 @@
                       </script>
                      ";
             }
+            else
+            {
+                echo "<script>
+                        alert('Password is incorrect')
+                      </script>
+                     ";
+            }
         }
         else
         {

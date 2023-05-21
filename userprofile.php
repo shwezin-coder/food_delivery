@@ -71,7 +71,7 @@
                         <div class="col-md-6">
                             <div class="control-group">
                                 <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"
-                                required="required" value="<?php echo $_POST['email'] ?? $row['email']; ?>"  required/>
+                                required="required" value="<?php echo $_POST['email'] ?? $row['email']; ?>"  readonly/>
                             </div>
                         </div>
                     </div>
