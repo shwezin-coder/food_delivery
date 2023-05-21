@@ -3,6 +3,8 @@ User Role
     Staff => 2
     Customer => 3
 
+Deleted_at => 0 (not delete), 1 => (deleted)
+
 User Management
 - Sign Up
     Validation 
