@@ -51,6 +51,18 @@
               <p>Users</p>
             </a>
           </li>
+          <li>
+            <a href="categories.php">
+              <i class="now-ui-icons education_paper"></i>
+              <p>Category</p>
+            </a>
+          </li>
+          <li>
+            <a href="menus.php">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Menus</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
