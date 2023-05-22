@@ -36,7 +36,7 @@ CREATE TABLE `users` (
   `address` text NOT NULL,
   `password` text NOT NULL,
   `deleted_at` int DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
