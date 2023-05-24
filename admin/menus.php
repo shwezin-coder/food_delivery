@@ -202,8 +202,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Menus <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addModal">Add Menus</button></h4>
-                
+                <h4 class="card-title">Menus <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addModal">Add Menus</button></h4>  
               </div>
               <div class="card-body">
                     <table class="table table-hover table-striped" id="menu-list">
@@ -232,9 +231,9 @@
                                 <td><?php echo $row_menu['noofitems']; ?></td>
                                 <td>
                                     <div class="flex">
-                                        <button class="btn btn-primary editbtn" data-toggle="modal" data-target="#editModal" data-menu='<?php echo json_encode($row_menu); ?>'>Edit</button>
+                                        <button class="btn btn-primary editbtn" data-toggle="modal" data-target="#editModal" data-edit-menu='<?php echo json_encode($row_menu); ?>'>Edit</button>
                                         <button class="btn btn-danger deletebtn" data-toggle="modal" data-target="#deleteModal" data-id="<?php echo $row_menu['menu_id']; ?>">Delete</button>
-                                        <button class="btn btn-primary editimagebtn" data-toggle="modal" data-target="#editimageModal" data-menu='<?php echo json_encode($row_menu); ?>'>Update Image</button>
+                                        <button class="btn btn-primary editimagebtn" data-toggle="modal" data-target="#editimageModal" data-editimg-menu="<?php echo json_encode($row_menu); ?>">Update Image</button>
                                     </div>
                                 </td>
                             </tr>
@@ -357,7 +356,7 @@
                             <input type="number" name="uprice" id="uprice" class="form-control">
                         </div>
                     </div>
-                    <input type="text" name="umenu_id" id="umenu_id">
+                    <input type="hidden" name="umenu_id" id="umenu_id">
                 </div>
                 
                 <div class="modal-footer">
@@ -423,28 +422,27 @@
         $(document).ready( function () {
 
             // datatable
-            $('#menu-list').DataTable();
-
-            // edit button click
-            $(".editbtn").click(function(){
-                var menu_data = $(this).attr("data-menu");
-                var menu_data_obj = $.parseJSON(menu_data);
-                $('#uname').val(menu_data_obj.menu_name);
-                $('#unoofitems').val(menu_data_obj.noofitems);
-                $('#ucategory_id').val(menu_data_obj.category_id);
-                $('#uprice').val(menu_data_obj.price);
-                $('#umenu_id').val(menu_data_obj.menu_id);
-            });
-            $(".editimagebtn").click(function(){
-                var menu_data = $(this).attr("data-menu");
-                var menu_data_obj = $.parseJSON(menu_data);
-                $('#old_image').val(menu_data_obj.image);
-                $('#umenuimage_id').val(menu_data_obj.menu_id);
-            });
-            $(".deletebtn").click(function(){
-                var menu_id = $(this).attr("data-id");
-                $("#dmenu_id").val(menu_id);
-            });
+            $('#menu-list').DataTable();     
+    });
+      // edit button click
+      $(".editbtn").click(function(){
+        var menu_data = $(this).attr("data-edit-menu");
+        var menu_data_obj = $.parseJSON(menu_data);
+        $('#uname').val(menu_data_obj.menu_name);
+        $('#unoofitems').val(menu_data_obj.noofitems);
+        $('#ucategory_id').val(menu_data_obj.category_id);
+        $('#uprice').val(menu_data_obj.price);
+        $('#umenu_id').val(menu_data_obj.menu_id);
+    });
+    $(".editimagebtn").click(function(){
+        var menu_data = $(this).attr("data-editimg-menu");
+        var menu_data_obj = $.parseJSON(menu_data);
+        $('#old_image').val(menu_data_obj.image);
+        $('#umenuimage_id').val(menu_data_obj.menu_id);
+    });
+    $(".deletebtn").click(function(){
+        var menu_id = $(this).attr("data-id");
+        $("#dmenu_id").val(menu_id);
     });
 
 </script>

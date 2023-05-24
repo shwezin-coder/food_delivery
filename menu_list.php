@@ -1,235 +1,151 @@
 <?php 
     include_once('header.php');
-    $select_menus = "SELECT * FROM menus 
-                     WHERE deleted_at = 0
-                    ";
-    $select_menus_query = mysqli_query($connect,$select_menus);
-    $count_menus = mysqli_num_rows($select_menus_query);
-    $records_per_page = 9;
-    $total_pages = $count_menus / $records_per_page;
-    $page = isset($_GET['page']) ?? 1;
-    $start = $page * $records_per_page;
 ?>
-<!-- Page Header Start -->
-    <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">Sign In</h1>
-            <div class="d-inline-flex">
-                <p class="m-0"><a href="index.php">Home</a></p>
-                <p class="m-0 px-2">-</p>
-                <p class="m-0">Sign In</p>
+    <style>
+        .page-item{
+            cursor:pointer !important;
+        }
+    </style>
+    <!-- Page Header Start -->
+        <div class="container-fluid bg-secondary mb-5">
+            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+                <h1 class="font-weight-semi-bold text-uppercase mb-3">Menu</h1>
+                <div class="d-inline-flex">
+                    <p class="m-0"><a href="index.php">Home</a></p>
+                    <p class="m-0 px-2">-</p>
+                    <p class="m-0">Menu</p>
+                </div>
             </div>
         </div>
-    </div>
- <!-- Page Header End -->
-
+    <!-- Page Header End -->
     <!-- Shop Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-12">
                 <!-- Price Start -->
-                <div class="border-bottom mb-4 pb-4">
-                    <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-                    <form>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="price-all">
-                            <label class="custom-control-label" for="price-all">All Price</label>
-                            <span class="badge border font-weight-normal">1000</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-1">
-                            <label class="custom-control-label" for="price-1">$0 - $100</label>
-                            <span class="badge border font-weight-normal">150</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-2">
-                            <label class="custom-control-label" for="price-2">$100 - $200</label>
-                            <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-3">
-                            <label class="custom-control-label" for="price-3">$200 - $300</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-4">
-                            <label class="custom-control-label" for="price-4">$300 - $400</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="price-5">
-                            <label class="custom-control-label" for="price-5">$400 - $500</label>
-                            <span class="badge border font-weight-normal">168</span>
-                        </div>
-                    </form>
+                <div class="mb-4 pb-4">
+                    <h5 class="font-weight-semi-bold mb-4">Filter by Category</h5>
+                        <?php 
+                            $select_category = "SELECT * FROM categories
+                                                WHERE deleted_at = 0
+                                               ";
+                            $select_category_query = mysqli_query($connect,$select_category);
+                            $select_category_count = mysqli_num_rows($select_category_query);
+                            for ($i=0; $i < $select_category_count ; $i++) { 
+                                $row_categories = mysqli_fetch_assoc($select_category_query);
+                        ?>
+                            <div class="custom-control d-flex align-items-center mb-3">
+                                <input type="radio" name="category_id" id="category<?php echo $i; ?>" class="categories" value="<?php echo $row_categories['id']; ?>">
+                                <label for="category<?php echo $i; ?>"><?php echo $row_categories['category_name']; ?></label>
+                            </div>
+                        <?php 
+                            }
+                        ?>
                 </div>
                 <!-- Price End -->
-                
-                <!-- Color Start -->
-                <div class="border-bottom mb-4 pb-4">
-                    <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
-                    <form>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="color-all">
-                            <label class="custom-control-label" for="price-all">All Color</label>
-                            <span class="badge border font-weight-normal">1000</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="color-1">
-                            <label class="custom-control-label" for="color-1">Black</label>
-                            <span class="badge border font-weight-normal">150</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="color-2">
-                            <label class="custom-control-label" for="color-2">White</label>
-                            <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="color-3">
-                            <label class="custom-control-label" for="color-3">Red</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="color-4">
-                            <label class="custom-control-label" for="color-4">Blue</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="color-5">
-                            <label class="custom-control-label" for="color-5">Green</label>
-                            <span class="badge border font-weight-normal">168</span>
-                        </div>
-                    </form>
-                </div>
-                <!-- Color End -->
-
-                <!-- Size Start -->
-                <div class="mb-5">
-                    <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
-                    <form>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="size-all">
-                            <label class="custom-control-label" for="size-all">All Size</label>
-                            <span class="badge border font-weight-normal">1000</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="size-1">
-                            <label class="custom-control-label" for="size-1">XS</label>
-                            <span class="badge border font-weight-normal">150</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="size-2">
-                            <label class="custom-control-label" for="size-2">S</label>
-                            <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="size-3">
-                            <label class="custom-control-label" for="size-3">M</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="size-4">
-                            <label class="custom-control-label" for="size-4">L</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="size-5">
-                            <label class="custom-control-label" for="size-5">XL</label>
-                            <span class="badge border font-weight-normal">168</span>
-                        </div>
-                    </form>
-                </div>
-                <!-- Size End -->
             </div>
             <!-- Shop Sidebar End -->
-
-
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-12">
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search by name">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
-                                            <i class="fa fa-search"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="dropdown ml-4">
-                                <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                            Sort by
-                                        </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                    <a class="dropdown-item" href="#">Latest</a>
-                                    <a class="dropdown-item" href="#">Popularity</a>
-                                    <a class="dropdown-item" href="#">Best Rating</a>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search by name" id="search-name">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-transparent text-primary">
+                                        <i class="fa fa-search"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <?php 
-                        $select_menus_pagination = "SELECT * FROM menus m, categories c
-                                                    WHERE m.category_id = c.id AND m.deleted_at = 0
-                                                    LIMIT $start, $records_per_page
-                                                   ";
-                        $select_menus_pagination_query = mysqli_query($connect,$select_menus_pagination);
-                        $count_menu_pagination = mysqli_num_rows($select_menus_pagination_query);
-                        for ($i=0; $i < $count_menu_pagination ; $i++) { 
-                            $row_menus = mysqli_fetch_assoc($select_menus_query);
-                    ?>
-                        <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                        <div class="card product-item border-0 mb-4">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                            </div>
-                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                <div class="d-flex justify-content-center">
-                                    <h6>$123.00</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between bg-light border">
-                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <?php 
-                        }
-                    ?>
-                    
-                    <div class="col-12 pb-1">
-                        <nav aria-label="Page navigation">
-                          <ul class="pagination justify-content-center mb-3">
-                            <li class="page-item disabled">
-                              <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                              </a>
-                            </li>
-                            
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </nav>
-                    </div>
+                </div>
+                <div class="row pb-3" id="search-data">
+                
+                </div>
+                <div class="col-12 pb-1">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center mb-3" id="page-data">
+                          
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <!-- Shop Product End -->
         </div>
     </div>
     <!-- Shop End -->
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" role="dialog">
+        <div class="modal-dialog">
+            <form action="menus.php" method="POST">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title float-left">Add to cart</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" name="quantity" id="quantity" class="form-control">
+                            </div>
+                        </div>
+                        <input type="text" name="menu_name" id="menu_name">
+                        <input type="text" name="price" id="price">
+                        <input type="text" name="category_name" id="category_name">
+                        <input type="hidden" name="menu_id" id="menu_id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" name="btnUpdate">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  <!-- Edit Modal -->
 <?php
     include_once('footer.php');
 ?>
+<script>
+    $(document).ready(function ()
+    {
+        performSearch();
+        $('#search-name').keyup(function() {
+            menu_name = $(this).val();
+            performSearch(page=1,menu_name);
+        });
+        $('.categories').click(function(){
+            category_id = $(this).val();
+            performSearch(page=1,menu_name=null,category_id=category_id);
+        });
+    });
+    $('.cartbtn').click(function(){
+        var menu_data = $(this).attr("data-cart");
+        var menu_data_obj = $.parseJSON(menu_data);
+        $('#menu-name').val(menu_data_obj.menu_name);
+
+    });
+    function pagination(page){
+        category_id = $('input[name="category_id"]:checked').val();
+        menu_name = $('#search-name').val();
+        performSearch(page,menu_name,category_id);
+    }
+    function performSearch(page = 1,menu_name = null, category_id = null) {
+  $.ajax({
+    url: 'search_ajax.php',
+    type: 'POST',
+    data: { menu_name:menu_name,category_id:category_id, page: page},
+    dataType: 'json',
+    success: function(response) {
+      // Update search results container
+      $('#search-data').html(response.search_data);
+      $('#page-data').html(response.page_data);
+    }
+  });
+}
+</script>
