@@ -1,7 +1,7 @@
 <?php 
     include_once('header.php');
     // select menus without deleting 
-    $select_menus = "SELECT * FROM menus m, categories c
+    $select_menus = "SELECT *, m.id AS menu_id FROM menus m, categories c
                      WHERE m.deleted_at = 0 AND m.category_id = c.id
                      ORDER BY m.id DESC";
     $select_menus_query = mysqli_query($connect,$select_menus);
@@ -214,7 +214,7 @@
                             <th>Image</th>
                             <th>Price</th>
                             <th>No of Items</th>
-                            <th>Action</th>
+                            <th width="30%">Action</th>
                         </thead>
                         <tbody>
                         <?php 
@@ -228,12 +228,12 @@
                                 <td><?php echo $row_menu['menu_name']; ?></td>
                                 <td><?php echo $row_menu['category_name']; ?></td>
                                 <td><img src="<?php echo $target_dir .$row_menu['image']; ?>" alt="<?php echo $row_menu['image']; ?>" width="100px" height="100px"></td>
-                                <td>$ <?php echo $row_menu['price']; ?></td>
+                                <td><?php echo $row_menu['price']; ?> MMK</td>
                                 <td><?php echo $row_menu['noofitems']; ?></td>
                                 <td>
                                     <div class="flex">
                                         <button class="btn btn-primary editbtn" data-toggle="modal" data-target="#editModal" data-menu='<?php echo json_encode($row_menu); ?>'>Edit</button>
-                                        <button class="btn btn-danger deletebtn" data-toggle="modal" data-target="#deleteModal" data-id="<?php echo $row_menu['id']; ?>">Delete</button>
+                                        <button class="btn btn-danger deletebtn" data-toggle="modal" data-target="#deleteModal" data-id="<?php echo $row_menu['menu_id']; ?>">Delete</button>
                                         <button class="btn btn-primary editimagebtn" data-toggle="modal" data-target="#editimageModal" data-menu='<?php echo json_encode($row_menu); ?>'>Update Image</button>
                                     </div>
                                 </td>
@@ -357,7 +357,7 @@
                             <input type="number" name="uprice" id="uprice" class="form-control">
                         </div>
                     </div>
-                    <input type="hidden" name="umenu_id" id="umenu_id">
+                    <input type="text" name="umenu_id" id="umenu_id">
                 </div>
                 
                 <div class="modal-footer">
@@ -433,13 +433,13 @@
                 $('#unoofitems').val(menu_data_obj.noofitems);
                 $('#ucategory_id').val(menu_data_obj.category_id);
                 $('#uprice').val(menu_data_obj.price);
-                $('#umenu_id').val(menu_data_obj.id);
+                $('#umenu_id').val(menu_data_obj.menu_id);
             });
             $(".editimagebtn").click(function(){
                 var menu_data = $(this).attr("data-menu");
                 var menu_data_obj = $.parseJSON(menu_data);
                 $('#old_image').val(menu_data_obj.image);
-                $('#umenuimage_id').val(menu_data_obj.id);
+                $('#umenuimage_id').val(menu_data_obj.menu_id);
             });
             $(".deletebtn").click(function(){
                 var menu_id = $(this).attr("data-id");
