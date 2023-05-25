@@ -90,7 +90,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="quantity">Quantity</label>
-                                <input type="number" name="quantity" id="quantity" class="form-control">
+                                <input type="number" name="quantity" id="quantity" class="form-control" required>
                             </div>
                         </div>
                         <input type="hidden" name="image" id="image">

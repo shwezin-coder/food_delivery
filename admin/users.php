@@ -193,7 +193,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="role">Role</label>
-                            <select name="role" id="role" class="form-control">
+                            <select name="role" id="role" class="form-control" required>
                                 <option value="2" <?php if((isset($_POST['role'])) && ($_POST['role'] == 2)){ echo 'selected'; } ?>>Staff</option>
                                 <option value="3" <?php if((isset($_POST['role'])) && ($_POST['role'] == 3)){ echo 'selected'; } ?>>Customer</option>
                             </select>
@@ -216,7 +216,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label for="address">Address</label>
-                            <textarea name="address" cols="30" class="form-control" rows="10"><?php echo $_POST['password'] ?? ''; ?></textarea>
+                            <textarea name="address" cols="30" class="form-control" rows="10" required><?php echo $_POST['address'] ?? ''; ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -265,7 +265,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label for="uaddress">Address</label>
-                            <textarea name="uaddress" class="form-control" cols="30" id="uaddress" rows="10"></textarea>
+                            <textarea name="uaddress" class="form-control" cols="30" id="uaddress" rows="10" required></textarea>
                         </div>
                     </div>
                     <input type="hidden" name="uuser_id" id="uuser_id">

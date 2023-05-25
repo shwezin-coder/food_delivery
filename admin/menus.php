@@ -63,10 +63,9 @@
                 }
 
                 // Allow certain file formats
-                elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                && $imageFileType != "gif" ) {
+                elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
                 echo "<script>
-                        alert('Sorry, only JPG, JPEG, PNG & GIF files are allowed.')
+                        alert('Sorry, only JPG, JPEG, PNG files are allowed.')
                     </script>";
                 }
             elseif (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -161,10 +160,9 @@
             }
 
             // Allow certain file formats
-            elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" ) {
+            elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
             echo "<script>
-                    alert('Sorry, only JPG, JPEG, PNG & GIF files are allowed.')
+                    alert('Sorry, only JPG, JPEG, PNG files are allowed.')
                 </script>";
             }
         elseif (move_uploaded_file($_FILES["uimage"]["tmp_name"], $target_file)) {
@@ -273,23 +271,23 @@
                         </div>
                         <div class="col-md-6">
                             <label for="noofitems">No Of Items</label>
-                            <input type="number" name="noofitems" id="noofitems" class="form-control">
+                            <input type="number" name="noofitems" id="noofitems" class="form-control" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="image">Image</label>
-                            <input type="file" name="image" id="image" class="form-control">
+                            <input type="file" name="image" id="image" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <label for="price">Price</label>
-                            <input type="number" name="price" id="price" class="form-control">
+                            <input type="number" name="price" id="price" class="form-control" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <label for="category_id">Category Name</label>
-                            <select name="category_id" class="form-control">
+                            <select name="category_id" class="form-control" required>
                                 <?php
                                     $select_categories1 = "SELECT * FROM categories
                                                           WHERE deleted_at = 0
@@ -334,13 +332,13 @@
                         </div>
                         <div class="col-md-6">
                             <label for="unoofitems">No Of Items</label>
-                            <input type="number" name="unoofitems" id="unoofitems" class="form-control">
+                            <input type="number" name="unoofitems" id="unoofitems" class="form-control" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="ucategory_id">Category Name</label>
-                            <select name="ucategory_id" id="ucategory_id" class="form-control">
+                            <select name="ucategory_id" id="ucategory_id" class="form-control" required>
                                 <?php
                                     for ($i=1; $i <= $count_categories; $i++) {
                                         $row_category = mysqli_fetch_assoc($select_categories_query);
@@ -353,7 +351,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="uprice">Price</label>
-                            <input type="number" name="uprice" id="uprice" class="form-control">
+                            <input type="number" name="uprice" id="uprice" class="form-control" required>
                         </div>
                     </div>
                     <input type="hidden" name="umenu_id" id="umenu_id">
