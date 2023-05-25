@@ -37,7 +37,7 @@
                         ?>
                             <div class="custom-control d-flex align-items-center mb-3">
                                 <input type="radio" name="category_id" id="category<?php echo $i; ?>" class="categories" value="<?php echo $row_categories['id']; ?>">
-                                <label for="category<?php echo $i; ?>"><?php echo $row_categories['category_name']; ?></label>
+                                <label for="category<?php echo $i; ?>" class="search-label"><?php echo $row_categories['category_name'];?></label>
                             </div>
                         <?php 
                             }
@@ -75,12 +75,11 @@
             </div>
             <!-- Shop Product End -->
         </div>
-    </div>
+    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     <!-- Shop End -->
     <!-- Cart Modal -->
     <div class="modal fade" id="cartModal" role="dialog">
         <div class="modal-dialog">
-            <form action="menus.php" method="POST">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -94,17 +93,17 @@
                                 <input type="number" name="quantity" id="quantity" class="form-control">
                             </div>
                         </div>
-                        <input type="text" name="menu_name" id="menu_name">
-                        <input type="text" name="price" id="price">
-                        <input type="text" name="category_name" id="category_name">
+                        <input type="hidden" name="image" id="image">
+                        <input type="hidden" name="menu_name" id="menu_name">
+                        <input type="hidden" name="price" id="price">
+                        <input type="hidden" name="category_name" id="category_name">
                         <input type="hidden" name="menu_id" id="menu_id">
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name="btnUpdate">Save</button>
+                        <button onclick="shoppingcart()" class="btn btn-primary" data-dismiss="modal" name="btnaddtocart">Add to Cart</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
   <!-- Edit Modal -->
@@ -124,22 +123,54 @@
             performSearch(page=1,menu_name=null,category_id=category_id);
         });
     });
-    $('.cartbtn').click(function(){
-        var menu_data = $(this).attr("data-cart");
-        var menu_data_obj = $.parseJSON(menu_data);
-        $('#menu-name').val(menu_data_obj.menu_name);
-
-    });
+    function addtocart(menu_data)
+    {
+        $('#quantity').val('');
+        $('#menu_name').val(menu_data.menu_name);
+        $('#price').val(menu_data.price);
+        $('#category_name').val(menu_data.category_name);
+        $('#image').val(menu_data.image);
+        $('#menu_id').val(menu_data.menu_id);
+    }
     function pagination(page){
         category_id = $('input[name="category_id"]:checked').val();
         menu_name = $('#search-name').val();
         performSearch(page,menu_name,category_id);
     }
+    function shoppingcart()
+    {
+        var quantity = $('#quantity').val();
+        var menu_name = $('#menu_name').val();
+        var category_name = $('#category_name').val();
+        var price = $('#price').val();
+        var image = $('#image').val();
+        var menu_id = $('#menu_id').val();
+        $.ajax({
+            url: 'ajax.php',
+            type: 'POST',
+            data: {quantity:quantity,menu_name:menu_name,category_name:category_name,price:price,image:image,menu_id:menu_id,function:'shoppingcart'},
+            dataType: 'json',
+            success: function(response) {
+            if(response.status == true)
+            {
+                // Update search results container
+                $('#cart-data').html(response.cart_data);
+                alert('Cart Added Successfully');
+            }
+            else
+            {
+                alert('You need to login first.');
+                window.location.assign('signin.php');
+            }
+            
+            }
+        });
+    }
     function performSearch(page = 1,menu_name = null, category_id = null) {
   $.ajax({
-    url: 'search_ajax.php',
+    url: 'ajax.php',
     type: 'POST',
-    data: { menu_name:menu_name,category_id:category_id, page: page},
+    data: { menu_name:menu_name,category_id:category_id, page: page,function:'search'},
     dataType: 'json',
     success: function(response) {
       // Update search results container

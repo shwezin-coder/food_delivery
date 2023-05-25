@@ -1,5 +1,16 @@
 <?php 
 include_once('function.php');
+if(isset($_SESSION['user']))
+{
+    $user_id = $_SESSION['user']['id'];
+    // count shopping cart 
+    $select_cart = "SELECT SUM(quantity) AS totalitems FROM shopping_carts
+                    WHERE status = 0 AND user_id = '$user_id'
+                    ";
+    $select_cart_query = mysqli_query($connect,$select_cart);
+    $cart_data = mysqli_fetch_assoc($select_cart_query);
+    $_SESSION['totalitems'] = $cart_data['totalitems'];
+}
 
 ?>
 <!DOCTYPE html>
@@ -62,31 +73,34 @@ include_once('function.php');
             </div>
         </div>
         <div class="row align-items-center py-3 px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
+            <div class="col-lg-9 d-none d-lg-block">
                 <a href="" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                 </a>
-            </div>
-            <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
                 <a href="" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="" class="btn border">
+                <a href="cart.php" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <?php 
+                        if(isset($_SESSION['totalitems']))
+                        {
+                    ?>
+                         <span class="badge" id="cart-data"><?php echo $_SESSION['totalitems']; ?></span>
+                    <?php
+                        }
+                        else 
+                        {
+                    
+                    ?>
+                         <span class="badge" id="cart-data">0</span>
+                    <?php 
+                        }
+                    ?>
+                   
                 </a>
             </div>
         </div>
@@ -111,7 +125,7 @@ include_once('function.php');
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
+                                    <a href="cart.html" class="dropdown-item">Shopping Cart 
                                     <a href="checkout.html" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>
