@@ -63,6 +63,13 @@
               <p>Menus</p>
             </a>
           </li>
+          <li>
+            <a href="payment_types.php">
+              <i class="now-ui-icons shopping_credit-card"></i>
+              <p>Payment Types</p>
+            </a>
+          </li>
+    
         </ul>
       </div>
     </div>

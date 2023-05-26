@@ -35,7 +35,7 @@
                             for ($i=0; $i < $select_category_count ; $i++) { 
                                 $row_categories = mysqli_fetch_assoc($select_category_query);
                         ?>
-                            <div class="custom-control d-flex align-items-center mb-3">
+                            <div class="form-group">
                                 <input type="radio" name="category_id" id="category<?php echo $i; ?>" class="categories" value="<?php echo $row_categories['id']; ?>">
                                 <label for="category<?php echo $i; ?>" class="search-label"><?php echo $row_categories['category_name'];?></label>
                             </div>
