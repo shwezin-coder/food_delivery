@@ -125,6 +125,7 @@ if($_POST['function'] == 'shoppingcart')
         $price = $_POST['price'];
         $image = $_POST['image'];
         $menu_id = $_POST['menu_id'];
+        $special_note = $_POST['special_note'];
                 // count shopping cart 
         $select_cart = "SELECT * FROM shopping_carts
                         WHERE status = 0 AND user_id = '$user_id' AND menu_id = '$menu_id'
@@ -135,8 +136,8 @@ if($_POST['function'] == 'shoppingcart')
         if($count_cart == 0)
         {
             
-            $insert = "INSERT INTO shopping_carts(`user_id`,`menu_id`, `menu_name`, `price`, `image`, `quantity`, `category_name`)
-                       VALUES('$user_id','$menu_id','$menu_name','$price','$image','$quantity','$category_name')
+            $insert = "INSERT INTO shopping_carts(`user_id`,`menu_id`, `menu_name`, `price`, `image`, `quantity`, `category_name`,`special_note`)
+                       VALUES('$user_id','$menu_id','$menu_name','$price','$image','$quantity','$category_name','$special_note')
                       ";
             $insert_query = mysqli_query($connect,$insert);
             $quantity = $_SESSION['totalitems'] + $quantity;

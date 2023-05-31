@@ -21,7 +21,10 @@ User Management
         - current password is correct
         - new password and confirm password must be same
 - User Profile
+    Validation
+        - allow to update information like name, phone number and address except Email
 - Logout 
+        - can log out and destroy session 
 - Manage Users by admin
     Create 
         Validation

@@ -46,7 +46,7 @@
                         ?>
                                 <tr>
                                     <td class="align-middle"><img src="<?php echo $target_dir.$row_cart['image'];  ?>" alt="<?php echo $row_cart['image']; ?>" style="width: 50px;"><br /><?php echo $row_cart['menu_name']; ?></td>
-                                    <td><?php echo $row_cart['category_name']; ?></td>
+                                    <td class="align-middle"><?php echo $row_cart['category_name']; ?></td>
                                     <td class="align-middle price" data-price=<?php echo $row_cart['price']; ?>><?php echo $row_cart['price']; ?> MMK</td>
                                     <td class="align-middle">
                                         <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -106,7 +106,7 @@
                             <h5 class="font-weight-bold">Total</h5>
                             <h5 class="font-weight-bold"><?php echo $grandtotal; ?> MMK</h5>
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        <a href="checkout.php" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                     </div>
                 </div>
             </div>

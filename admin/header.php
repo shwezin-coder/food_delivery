@@ -64,6 +64,12 @@
             </a>
           </li>
           <li>
+            <a href="locations.php">
+              <i class="now-ui-icons location_pin"></i>
+              <p>Locations</p>
+            </a>
+          </li>
+          <li>
             <a href="payment_types.php">
               <i class="now-ui-icons shopping_credit-card"></i>
               <p>Payment Types</p>

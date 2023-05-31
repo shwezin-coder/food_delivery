@@ -92,6 +92,10 @@
                                 <label for="quantity">Quantity</label>
                                 <input type="number" name="quantity" id="quantity" class="form-control" required>
                             </div>
+                            <div class="col-md-12">
+                                <label for="special_note">Special Note</label>
+                                <textarea name="special_note" class="form-control" id="special_note" cols="30" rows="10"></textarea>
+                            </div>
                         </div>
                         <input type="hidden" name="image" id="image">
                         <input type="hidden" name="menu_name" id="menu_name">
@@ -145,10 +149,11 @@
         var price = $('#price').val();
         var image = $('#image').val();
         var menu_id = $('#menu_id').val();
+        var special_note = $('#special_note').val();
         $.ajax({
             url: 'ajax.php',
             type: 'POST',
-            data: {quantity:quantity,menu_name:menu_name,category_name:category_name,price:price,image:image,menu_id:menu_id,function:'shoppingcart'},
+            data: {quantity:quantity,menu_name:menu_name,category_name:category_name,price:price,image:image,menu_id:menu_id,special_note:special_note,function:'shoppingcart'},
             dataType: 'json',
             success: function(response) {
             if(response.status == true)

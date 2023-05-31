@@ -130,6 +130,9 @@
                                 for ($i=1; $i <= $count_user; $i++) { 
                                     $row_user = mysqli_fetch_assoc($select_user_query);
                                     switch ($row_user['role']) {
+                                        case 4:
+                                        $role_name = "Delivery";
+                                        break;
                                         case 3:
                                         $role_name = "Customer";
                                         break;
@@ -195,6 +198,7 @@
                             <label for="role">Role</label>
                             <select name="role" id="role" class="form-control" required>
                                 <option value="2" <?php if((isset($_POST['role'])) && ($_POST['role'] == 2)){ echo 'selected'; } ?>>Staff</option>
+                                <option value="4" <?php if((isset($_POST['role'])) && ($_POST['role'] == 4)){ echo 'selected'; } ?>>Delivery</option>
                                 <option value="3" <?php if((isset($_POST['role'])) && ($_POST['role'] == 3)){ echo 'selected'; } ?>>Customer</option>
                             </select>
                         </div>
@@ -209,7 +213,7 @@
                             <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $_POST['password'] ?? ''; ?>" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="confirm_password">Confrim Password</label>
+                            <label for="confirm_password">Confirm Password</label>
                             <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password" value="<?php echo $_POST['confirm_password'] ?? ''; ?>" required>
                         </div>
                     </div>
@@ -254,6 +258,7 @@
                             <label for="urole">Role</label>
                             <select name="urole" id="urole" class="form-control">
                                 <option value="2">Staff</option>
+                                <option value="4">Delivery</option>
                                 <option value="3">Customer</option>
                             </select>
                         </div>
