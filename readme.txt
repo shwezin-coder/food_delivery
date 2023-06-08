@@ -31,7 +31,6 @@ User Management
             - Email is unique
             - Confirm password and password must be same
             - all fields must be filled
-
 Order Management 
   - Manage Category
     Create 
@@ -50,6 +49,24 @@ Order Management
    - cart 
         - users can update quantity 
         - users can be added to cart if total ordered items must be lower or equal than noofitems in menu table. 
+Delivery Management
+    - Manage location
+        - location is unique
+        - all field is required
+    - Manage Delivery
+        - delivery added by admin
+        - delivery will be chosen by system depending on status of delivery
+        - order is not available if delivery is not free
+    
+Payment
+    - Manage Payment type
+        - Payment type is unique
+        - all field is required
+    - Manage Payment
+        - User can pay food order by all payment types
+         
+
+    
 
 
         
