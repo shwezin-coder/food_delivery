@@ -16,12 +16,22 @@
         $payment_type = $_POST['payment_type'];
         $customer_id = $_POST['customer_id'];
         $delivery_id = $_POST['delivery_id'];
-        $order_information = json_encode($_POST['order_information']);
+        $order_informations = json_encode($_POST['order_information']);
+        foreach($_POST['order_information'] as $order_information)
+        {
+            $cart_id = $order_information['id'];
+            $update = "UPDATE shopping_carts SET
+                       status = 1
+                       WHERE id = '$cart_id'
+                      ";
+            $update_query = mysqli_query($connect,$update);
+        }
         $insert = "INSERT INTO orders(`customer_id`,`delivery_id`, `order_information`, `delivered_address`, `special_note`)
-                   VALUES('$customer_id','$delivery_id','$order_information','$delivered_address','$special_note')";
+                   VALUES('$customer_id','$delivery_id','$order_informations','$delivered_address','$special_note')";
         $insert_query = mysqli_query($connect,$insert);
         if($insert_query)
         {
+
             echo "<script>
                     alert('Checkout Successfully');
                     window.location.assign('menu_list.php')
@@ -93,6 +103,7 @@
                         <div class="col-md-12 form-group">
                             <label for="location">Location</label>
                             <select name="location" class="form-control" id="location">
+                                <option value="">Choose Location</option>
                                 <?php 
                                     $select_locations = "SELECT * FROM locations
                                                          WHERE deleted_at = 0
@@ -132,6 +143,7 @@
                                 $cart_total = $row_cart['quantity'] * $row_cart['price'];
                                 $total = $total + ($row_cart['price'] * $row_cart['quantity']);
                         ?>
+                                <input type="hidden" name="order_information[<?php echo $i; ?>][id]" value="<?php echo $row_cart['id']; ?>">
                                 <input type="hidden" name="order_information[<?php echo $i; ?>][menu_name]" value="<?php echo $row_cart['menu_name']; ?>">
                                 <input type="hidden" name="order_information[<?php echo $i; ?>][quantity]" value="<?php echo $row_cart['quantity']; ?>">
                                 <input type="hidden" name="order_information[<?php echo $i; ?>][price]" value="<?php echo $row_cart['price']; ?>">
@@ -142,18 +154,12 @@
                                 </div>
                         <?php 
                             }
-                            $shippingfees = 2000;
-                            $grandtotal = $total + $shippingfees;
                         ?>
                         <hr class="mt-0">
                         <h5 class="font-weight-medium mb-3">Delivery Information</h5>
                         <div class="d-flex justify-content-between">
                             <p>Estimated Time</p>
-                            <p id="estimated_time"></p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p>Delivery Fees</p>
-                            <p id="delivery_fees"></p>
+                            <p id="estimated_time">0 hour</p>
                         </div>
                         <?php 
                             $select_delivery = "SELECT * FROM users
@@ -179,6 +185,7 @@
                                     <p><?php echo $row_delivery['email']; ?></p>
                                 </div>
                                 <input type="hidden" name="delivery_id" value="<?php echo $row_delivery['id']; ?>">
+                                <input type="hidden" name="total" id="total" value="<?php echo $total; ?>">
                         <?php
                             }
                             if(isset($_SESSION['user']))
@@ -195,13 +202,13 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Delivery Fees</h6>
-                            <h6 class="font-weight-medium" id="delivery_fees"></h6>
+                            <h6 class="font-weight-medium" id="delivery_fees"> 0 MMK</h6>
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold"><?php echo $grandtotal; ?> MMK</h5>
+                            <h5 class="font-weight-bold" id="grand_total"><?php echo $total; ?> MMK</h5>
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
@@ -216,3 +223,14 @@
 <?php 
     include_once('footer.php');
 ?>
+<script>
+    $('#location').on("change",function(){
+        var location = $(this).val();
+        var total = $('#total').val();
+        var location_arr = location.split(",");
+        var grand_total = parseInt(total) + parseInt(location_arr[1]);
+        $('#delivery_fees').html(location_arr[1] + "MMK");
+        $('#estimated_time').html(location_arr[2]);
+        $('#grand_total').html(grand_total + "MMK");
+    });
+</script>

@@ -112,7 +112,7 @@ if($_POST['function'] == 'shoppingcart')
     if(!isset($_SESSION['user']))
     {
         $response = [
-            'status' => false
+            'status' => -1
         ];
         echo json_encode($response);
     }
@@ -133,6 +133,11 @@ if($_POST['function'] == 'shoppingcart')
         $select_cart_query = mysqli_query($connect,$select_cart);
         $cart_data = mysqli_fetch_assoc($select_cart_query);
         $count_cart = mysqli_num_rows($select_cart_query);
+        // select total cart
+        $select_total_product = "SELECT count(quantity) as total FROM shopping_carts
+                                 WHERE menu_name = '$menu_name'
+                                ";
+        $select_total_product_query = mysqli_query($connect,$select_total_product);
         if($count_cart == 0)
         {
             
@@ -154,7 +159,7 @@ if($_POST['function'] == 'shoppingcart')
         }
         $_SESSION['totalitems'] = $quantity;
         $response = [
-            'status' => true,
+            'status' => 1,
             'cart_data' => $_SESSION['totalitems']
         ];
         echo json_encode($response);

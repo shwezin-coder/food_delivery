@@ -156,16 +156,24 @@
             data: {quantity:quantity,menu_name:menu_name,category_name:category_name,price:price,image:image,menu_id:menu_id,special_note:special_note,function:'shoppingcart'},
             dataType: 'json',
             success: function(response) {
-            if(response.status == true)
+             // -1 => login first   
+            // 1 => true
+            // 2 => unavailable    
+            if(response.status == 1)
             {
                 // Update search results container
                 $('#cart-data').html(response.cart_data);
                 alert('Cart Added Successfully');
             }
-            else
+            if(response.status == -1)
             {
                 alert('You need to login first.');
                 window.location.assign('signin.php');
+            }
+            if(response.status == 2)
+            {
+                alert('Sorry,this item is out of stock now');
+                window.location.assign('menu_list.php');
             }
             
             }
