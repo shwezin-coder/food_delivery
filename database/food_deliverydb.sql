@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 26, 2023 at 04:47 AM
+-- Generation Time: Jul 12, 2023 at 12:59 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -46,6 +46,29 @@ INSERT INTO `categories` (`id`, `category_name`, `deleted_at`) VALUES
 (6, 'Japanese', 0),
 (7, 'Korean', 0),
 (8, 'Thai', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `locations`
+--
+
+CREATE TABLE `locations` (
+  `id` int NOT NULL,
+  `location_range` varchar(255) NOT NULL,
+  `duration` varchar(255) NOT NULL,
+  `fees` int NOT NULL,
+  `deleted_at` int NOT NULL DEFAULT '0' COMMENT '0 => not\r\n1 => deleted'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`id`, `location_range`, `duration`, `fees`, `deleted_at`) VALUES
+(1, 'Hledan To Sanchaung', '35 minutes', 1500, 0),
+(2, 'Myay Ni Gone To Bo Ta Htaung', '40 minutes ', 2000, 0),
+(3, 'Shwe Pyi Tha to Hledan', '1 hour 30 minutes', 2500, 0);
 
 -- --------------------------------------------------------
 
@@ -99,6 +122,67 @@ INSERT INTO `menus` (`id`, `menu_name`, `noofitems`, `image`, `category_id`, `pr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int NOT NULL,
+  `customer_id` int NOT NULL,
+  `delivery_id` int NOT NULL,
+  `order_information` json NOT NULL,
+  `delivered_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `special_note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `order_status` int NOT NULL DEFAULT '0' COMMENT '0 => pending,\r\n1 => processing,\r\n2 => delivered',
+  `deleted_at` int NOT NULL DEFAULT '0',
+  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_id`, `delivery_id`, `order_information`, `delivered_address`, `special_note`, `order_status`, `deleted_at`, `order_date`) VALUES
+(2, 4, 9, '[{\"id\": \"26\", \"price\": \"7500\", \"total\": \"37500\", \"quantity\": \"5\", \"menu_name\": \"Bibimbap\"}, {\"id\": \"27\", \"price\": \"5000\", \"total\": \"15000\", \"quantity\": \"3\", \"menu_name\": \"Kaw Yay Khouk Swel \"}, {\"id\": \"28\", \"price\": \"7500\", \"total\": \"22500\", \"quantity\": \"3\", \"menu_name\": \"Kyay Oh Si Chat\"}, {\"id\": \"29\", \"price\": \"5000\", \"total\": \"15000\", \"quantity\": \"3\", \"menu_name\": \"Thai Pork Fried Rice\"}, {\"id\": \"30\", \"price\": \"10000\", \"total\": \"50000\", \"quantity\": \"5\", \"menu_name\": \"Thai Pad\"}, {\"id\": \"31\", \"price\": \"10000\", \"total\": \"40000\", \"quantity\": \"4\", \"menu_name\": \"KungPao Chicken\"}]', '', '', 0, 0, '2023-05-31 08:20:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` int NOT NULL,
+  `order_id` int NOT NULL,
+  `paymenttype_id` int NOT NULL,
+  `transaction_no` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_types`
+--
+
+CREATE TABLE `payment_types` (
+  `id` int NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `deleted_at` int NOT NULL DEFAULT '0' COMMENT '0 => not\r\n1 => deleted'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment_types`
+--
+
+INSERT INTO `payment_types` (`id`, `type`, `deleted_at`) VALUES
+(1, 'Kbz pay', 0),
+(2, 'Aya Pay', 0),
+(3, 'Wave Pay', 0),
+(4, 'CB Pay', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `shopping_carts`
 --
 
@@ -110,6 +194,7 @@ CREATE TABLE `shopping_carts` (
   `image` text NOT NULL,
   `quantity` int NOT NULL,
   `category_name` varchar(255) NOT NULL,
+  `special_note` text NOT NULL,
   `menu_id` int NOT NULL,
   `status` int NOT NULL DEFAULT '0' COMMENT '1 => order,\r\n0 => not yet'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -118,13 +203,14 @@ CREATE TABLE `shopping_carts` (
 -- Dumping data for table `shopping_carts`
 --
 
-INSERT INTO `shopping_carts` (`id`, `user_id`, `menu_name`, `price`, `image`, `quantity`, `category_name`, `menu_id`, `status`) VALUES
-(26, 4, 'Bibimbap', 7500, 'bibimbap.jpg', 4, 'Korean', 22, 0),
-(27, 4, 'Kaw Yay Khouk Swel ', 5000, '1200px-Kaw_yay_khauk_swe.jpg', 3, 'Breakfast', 20, 0),
-(28, 4, 'Kyay Oh Si Chat', 7500, 'kyay_oh_si_chat.jpg', 3, 'Breakfast', 18, 0),
-(29, 4, 'Thai Pork Fried Rice', 5000, 'THai Pork Fried Rice.jpg', 3, 'Breakfast', 15, 0),
-(30, 4, 'Thai Pad', 10000, 'Authentic-Pad-Thai_square-1908.jpg', 5, 'Thai', 23, 0),
-(31, 4, 'KungPao Chicken', 10000, 'kungpao_chicken.jpg', 4, 'Chinese', 6, 0);
+INSERT INTO `shopping_carts` (`id`, `user_id`, `menu_name`, `price`, `image`, `quantity`, `category_name`, `special_note`, `menu_id`, `status`) VALUES
+(26, 4, 'Bibimbap', 7500, 'bibimbap.jpg', 5, 'Korean', '', 22, 1),
+(27, 4, 'Kaw Yay Khouk Swel ', 5000, '1200px-Kaw_yay_khauk_swe.jpg', 3, 'Breakfast', '', 20, 1),
+(28, 4, 'Kyay Oh Si Chat', 7500, 'kyay_oh_si_chat.jpg', 3, 'Breakfast', '', 18, 1),
+(29, 4, 'Thai Pork Fried Rice', 5000, 'THai Pork Fried Rice.jpg', 3, 'Breakfast', '', 15, 1),
+(30, 4, 'Thai Pad', 10000, 'Authentic-Pad-Thai_square-1908.jpg', 5, 'Thai', '', 23, 1),
+(31, 4, 'KungPao Chicken', 10000, 'kungpao_chicken.jpg', 4, 'Chinese', '', 6, 1),
+(32, 5, 'Dim Sum Set', 25000, 'DimsumShutterstock.jpg', 3, 'Breakfast', 'Pouk Si - 1 Set\nShrimp - 1 Set\nSpirullina - 1 Set', 27, 0);
 
 -- --------------------------------------------------------
 
@@ -135,11 +221,12 @@ INSERT INTO `shopping_carts` (`id`, `user_id`, `menu_name`, `price`, `image`, `q
 CREATE TABLE `users` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
-  `role` int NOT NULL COMMENT '1 => admin,\r\n2 => staff\r\n3 => customer\r\n',
+  `role` int NOT NULL COMMENT '1 => admin,\r\n2 => staff,\r\n3 => customer,\r\n4 => delivery\r\n',
   `email` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
   `address` text NOT NULL,
   `password` text NOT NULL,
+  `delivery_status` int NOT NULL DEFAULT '0' COMMENT '0 => available,\r\n1 => unavailable',
   `deleted_at` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -147,12 +234,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `role`, `email`, `phone_number`, `address`, `password`, `deleted_at`) VALUES
-(4, 'Thazin', 3, 'thazin123@gmail.com', '09422715702', 'Yangon', '$2y$10$ti/0LKXQgOe.Vau4oo1lqu76Qf5lXo1lkPdUOqFE5HDPQE0lWuh/K', 0),
-(5, 'admin', 1, 'admin@gmail.com', '09422715702', 'Yangon', '$2y$10$ti/0LKXQgOe.Vau4oo1lqu76Qf5lXo1lkPdUOqFE5HDPQE0lWuh/K', 0),
-(6, 'jahopakico', 2, 'darik@mailinator.com', '+1 (499) 303-9235', 'Cambodia', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 0),
-(7, 'Selena Gomez3', 3, 'selena123@gmail.com', '093452435233', 'Okpo, Bago', '$2y$10$8xrk4x9Ovr4nO8cqnRDxpO3xnrWXB1CxC3vSNGj5P4usogGmFvEgm', 0),
-(8, 'nenizaze2', 2, 'tujapiqoqi@mailinator.com', '+1 (786) 301-30072', 'Eos quis et neque i 1', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 1);
+INSERT INTO `users` (`id`, `name`, `role`, `email`, `phone_number`, `address`, `password`, `delivery_status`, `deleted_at`) VALUES
+(4, 'Thazin', 3, 'thazin123@gmail.com', '09422715702', 'Yangon', '$2y$10$ti/0LKXQgOe.Vau4oo1lqu76Qf5lXo1lkPdUOqFE5HDPQE0lWuh/K', 0, 0),
+(5, 'admin', 1, 'admin@gmail.com', '09422715702', 'Yangon', '$2y$10$ti/0LKXQgOe.Vau4oo1lqu76Qf5lXo1lkPdUOqFE5HDPQE0lWuh/K', 0, 0),
+(6, 'jahopakico1', 4, 'darik@mailinator.com', '+1 (499) 303-9235', 'Cambodia', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 1, 0),
+(7, 'Selena Gomez', 3, 'selena123@gmail.com', '093452435233', 'Okpo, Bago', '$2y$10$8xrk4x9Ovr4nO8cqnRDxpO3xnrWXB1CxC3vSNGj5P4usogGmFvEgm', 0, 0),
+(8, 'nenizaze2', 2, 'tujapiqoqi@mailinator.com', '+1 (786) 301-30072', 'Eos quis et neque i 1', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 0, 1),
+(9, 'verewakequ', 4, 'xowygarywy@mailinator.com', '+1 (987) 982-3634', 'Cupiditate eu except', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -165,9 +253,33 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `locations`
+--
+ALTER TABLE `locations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `menus`
 --
 ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payment_types`
+--
+ALTER TABLE `payment_types`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -193,22 +305,46 @@ ALTER TABLE `categories`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `locations`
+--
+ALTER TABLE `locations`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payment_types`
+--
+ALTER TABLE `payment_types`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `shopping_carts`
 --
 ALTER TABLE `shopping_carts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
