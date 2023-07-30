@@ -43,7 +43,7 @@
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
           <li class="active ">
-            <a href="dashboard.php">
+            <a href="index.php">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
@@ -78,7 +78,18 @@
               <p>Payment Types</p>
             </a>
           </li>
-    
+          <li>
+            <a href="payment.php">
+              <i class="now-ui-icons shopping_credit-card"></i>
+              <p>Payment</p>
+            </a>
+          </li>
+          <li>
+            <a href="delivery.php">
+              <i class="now-ui-icons location_pin"></i>
+              <p>Delivery</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>

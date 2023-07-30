@@ -103,7 +103,7 @@ if(isset($_SESSION['user']))
                                     <a href="changepassword.php" class="dropdown-item">Change password</a>
                               
                             <?php
-                                if($_SESSION['user']['role'] == 1)
+                                if($_SESSION['user']['role'] == 1 || $_SESSION['user']['role'] == 3 || $_SESSION['user']['role'] == 4)
                                 {
                             ?>
                                     <a href="admin/dashboard.php" class="dropdown-item">Go to Dashboard</a>

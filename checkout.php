@@ -29,14 +29,22 @@
         $insert = "INSERT INTO orders(`customer_id`,`delivery_id`, `order_information`, `delivered_address`, `special_note`)
                    VALUES('$customer_id','$delivery_id','$order_informations','$delivered_address','$special_note')";
         $insert_query = mysqli_query($connect,$insert);
+        $order_id = mysqli_insert_id($connect);
         if($insert_query)
         {
-
-            echo "<script>
+            $total= $_POST['total'];
+            $insert_delivery = "INSERT INTO payments(`order_id`,`paymenttype_id`, `transaction_no`,`amount`) 
+                                VALUES('$order_id','$payment_type','$transaction_no','$total')
+                               ";
+            $insert_delivery_query = mysqli_query($connect,$insert_delivery);
+            if($insert_delivery_query)
+            {
+                echo "<script>
                     alert('Checkout Successfully');
-                    window.location.assign('menu_list.php')
+                    window.location.assign('index.php')
                   </script>
                  ";
+            }
         }
         else
         {
@@ -199,6 +207,7 @@
                             <h5 class="font-weight-bold" id="grand_total"><?php echo $total; ?> MMK</h5>
                         </div>
                     </div>
+                    <input type="hidden" name="total" value="<?php echo $total; ?>">
                     <div class="card-footer border-secondary bg-transparent">
                         <button type="submit" name="btnsubmit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"> Place Order</button>
                     </div>

@@ -100,6 +100,6 @@
         </div>
     </div>
     <!-- Contact End -->
-<?php `
+<?php 
     include_once('footer.php');
 ?>
