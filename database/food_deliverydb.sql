@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 12, 2023 at 12:59 AM
+-- Generation Time: Jul 30, 2023 at 05:02 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -142,7 +142,13 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `customer_id`, `delivery_id`, `order_information`, `delivered_address`, `special_note`, `order_status`, `deleted_at`, `order_date`) VALUES
-(2, 4, 9, '[{\"id\": \"26\", \"price\": \"7500\", \"total\": \"37500\", \"quantity\": \"5\", \"menu_name\": \"Bibimbap\"}, {\"id\": \"27\", \"price\": \"5000\", \"total\": \"15000\", \"quantity\": \"3\", \"menu_name\": \"Kaw Yay Khouk Swel \"}, {\"id\": \"28\", \"price\": \"7500\", \"total\": \"22500\", \"quantity\": \"3\", \"menu_name\": \"Kyay Oh Si Chat\"}, {\"id\": \"29\", \"price\": \"5000\", \"total\": \"15000\", \"quantity\": \"3\", \"menu_name\": \"Thai Pork Fried Rice\"}, {\"id\": \"30\", \"price\": \"10000\", \"total\": \"50000\", \"quantity\": \"5\", \"menu_name\": \"Thai Pad\"}, {\"id\": \"31\", \"price\": \"10000\", \"total\": \"40000\", \"quantity\": \"4\", \"menu_name\": \"KungPao Chicken\"}]', '', '', 0, 0, '2023-05-31 08:20:38');
+(2, 4, 9, '[{\"id\": \"26\", \"price\": \"7500\", \"total\": \"37500\", \"quantity\": \"5\", \"menu_name\": \"Bibimbap\"}, {\"id\": \"27\", \"price\": \"5000\", \"total\": \"15000\", \"quantity\": \"3\", \"menu_name\": \"Kaw Yay Khouk Swel \"}, {\"id\": \"28\", \"price\": \"7500\", \"total\": \"22500\", \"quantity\": \"3\", \"menu_name\": \"Kyay Oh Si Chat\"}, {\"id\": \"29\", \"price\": \"5000\", \"total\": \"15000\", \"quantity\": \"3\", \"menu_name\": \"Thai Pork Fried Rice\"}, {\"id\": \"30\", \"price\": \"10000\", \"total\": \"50000\", \"quantity\": \"5\", \"menu_name\": \"Thai Pad\"}, {\"id\": \"31\", \"price\": \"10000\", \"total\": \"40000\", \"quantity\": \"4\", \"menu_name\": \"KungPao Chicken\"}]', '', '', 0, 0, '2023-05-31 08:20:38'),
+(3, 10, 9, '[{\"id\": \"33\", \"price\": \"25000\", \"total\": \"25000\", \"quantity\": \"1\", \"menu_name\": \"Dim Sum Set\"}]', '', '', 0, 0, '2023-07-30 14:47:19'),
+(4, 10, 9, '[{\"id\": \"34\", \"price\": \"25000\", \"total\": \"75000\", \"quantity\": \"3\", \"menu_name\": \"Dim Sum Set\"}]', '', '', 0, 0, '2023-07-30 14:54:22'),
+(5, 10, 9, '[{\"id\": \"35\", \"price\": \"2500\", \"total\": \"5000\", \"quantity\": \"2\", \"menu_name\": \"Pouk Si\"}]', '', '', 0, 0, '2023-07-30 14:55:08'),
+(6, 10, 9, '[{\"id\": \"36\", \"price\": \"4500\", \"total\": \"13500\", \"quantity\": \"3\", \"menu_name\": \"Samusa Soup\"}]', '', '', 0, 0, '2023-07-30 15:00:09'),
+(7, 10, 9, '[{\"id\": \"37\", \"price\": \"4500\", \"total\": \"18000\", \"quantity\": \"4\", \"menu_name\": \"Samusa Soup\"}]', '', '', 0, 0, '2023-07-30 15:03:29'),
+(8, 10, 9, '[{\"id\": \"38\", \"price\": \"4500\", \"total\": \"13500\", \"quantity\": \"3\", \"menu_name\": \"Nan Gyi Thote\"}]', '', '', 0, 0, '2023-07-30 15:04:17');
 
 -- --------------------------------------------------------
 
@@ -155,8 +161,17 @@ CREATE TABLE `payments` (
   `order_id` int NOT NULL,
   `paymenttype_id` int NOT NULL,
   `transaction_no` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `amount` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `order_id`, `paymenttype_id`, `transaction_no`, `created_at`, `amount`) VALUES
+(1, 6, 1, '12345', '2023-07-30 15:00:09', 14000),
+(2, 8, 1, '12345', '2023-07-30 15:04:17', 13500);
 
 -- --------------------------------------------------------
 
@@ -210,7 +225,13 @@ INSERT INTO `shopping_carts` (`id`, `user_id`, `menu_name`, `price`, `image`, `q
 (29, 4, 'Thai Pork Fried Rice', 5000, 'THai Pork Fried Rice.jpg', 3, 'Breakfast', '', 15, 1),
 (30, 4, 'Thai Pad', 10000, 'Authentic-Pad-Thai_square-1908.jpg', 5, 'Thai', '', 23, 1),
 (31, 4, 'KungPao Chicken', 10000, 'kungpao_chicken.jpg', 4, 'Chinese', '', 6, 1),
-(32, 5, 'Dim Sum Set', 25000, 'DimsumShutterstock.jpg', 3, 'Breakfast', 'Pouk Si - 1 Set\nShrimp - 1 Set\nSpirullina - 1 Set', 27, 0);
+(32, 5, 'Dim Sum Set', 25000, 'DimsumShutterstock.jpg', 3, 'Breakfast', 'Pouk Si - 1 Set\nShrimp - 1 Set\nSpirullina - 1 Set', 27, 0),
+(33, 10, 'Dim Sum Set', 25000, 'DimsumShutterstock.jpg', 1, 'Breakfast', '', 27, 1),
+(34, 10, 'Dim Sum Set', 25000, 'DimsumShutterstock.jpg', 3, 'Breakfast', '', 27, 1),
+(35, 10, 'Pouk Si', 2500, 'pouk si.jpg', 2, 'Breakfast', '', 26, 1),
+(36, 10, 'Samusa Soup', 4500, 'Burmese-Samosa-Soup-2.jpg', 3, 'Breakfast', '', 25, 1),
+(37, 10, 'Samusa Soup', 4500, 'Burmese-Samosa-Soup-2.jpg', 4, 'Breakfast', '', 25, 1),
+(38, 10, 'Nan Gyi Thote', 4500, 'nan gyi thoke.jpg', 3, 'Breakfast', '', 24, 1);
 
 -- --------------------------------------------------------
 
@@ -240,7 +261,8 @@ INSERT INTO `users` (`id`, `name`, `role`, `email`, `phone_number`, `address`, `
 (6, 'jahopakico1', 4, 'darik@mailinator.com', '+1 (499) 303-9235', 'Cambodia', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 1, 0),
 (7, 'Selena Gomez', 3, 'selena123@gmail.com', '093452435233', 'Okpo, Bago', '$2y$10$8xrk4x9Ovr4nO8cqnRDxpO3xnrWXB1CxC3vSNGj5P4usogGmFvEgm', 0, 0),
 (8, 'nenizaze2', 2, 'tujapiqoqi@mailinator.com', '+1 (786) 301-30072', 'Eos quis et neque i 1', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 0, 1),
-(9, 'verewakequ', 4, 'xowygarywy@mailinator.com', '+1 (987) 982-3634', 'Cupiditate eu except', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 0, 0);
+(9, 'verewakequ', 4, 'xowygarywy@mailinator.com', '+1 (987) 982-3634', 'Cupiditate eu except', 'ac748cb38ff28d1ea98458b16695739d7e90f22d', 0, 0),
+(10, 'Song John Kii', 3, 'Sjk123@gmail.com', '09422715702', 'Okpho', '$2y$10$0itlN3fmL/6VwTPnjE2rRedeSWFnmUtVhkaDpZNo4V3yK0jJ0UfnW', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -320,13 +342,13 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment_types`
@@ -338,13 +360,13 @@ ALTER TABLE `payment_types`
 -- AUTO_INCREMENT for table `shopping_carts`
 --
 ALTER TABLE `shopping_carts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
