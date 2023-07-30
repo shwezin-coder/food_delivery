@@ -200,7 +200,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Menus <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addModal">Add Menus</button></h4>  
+                <h4 class="card-title addbtn">Menus <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addModal">Add Menus</button></h4>  
               </div>
               <div class="card-body">
                     <table class="table table-hover table-striped" id="menu-list">
@@ -208,7 +208,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Categories</th>
-                            <th>Image</th>
+                            <th>Image</th> 
                             <th>Price</th>
                             <th>No of Items</th>
                             <th width="30%">Action</th>

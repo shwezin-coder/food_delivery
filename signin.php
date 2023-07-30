@@ -37,20 +37,6 @@
         }
     }
 ?>
-<!-- Page Header Start -->
-    <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">Sign In</h1>
-            <div class="d-inline-flex">
-                <p class="m-0"><a href="index.php">Home</a></p>
-                <p class="m-0 px-2">-</p>
-                <p class="m-0">Sign In</p>
-            </div>
-        </div>
-    </div>
- <!-- Page Header End -->
-
-
     <!-- Contact Start -->
     <div class="container-fluid pt-5">
         <div class="text-center mb-4">
@@ -72,6 +58,9 @@
                             required="required" value="<?php echo $_POST['password'] ?? ''; ?>"/>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3 col-12">
+                        <a href="signup.php" style="text-decoration:none !important;">Don't you have an account? Please create!</a>
                     </div>
                         <button class="btn btn-primary py-2 px-4" type="submit"  name="btnSignIn" id="sendMessageButton">Sign In</button>
                     </div>

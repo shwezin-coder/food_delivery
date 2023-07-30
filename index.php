@@ -8,14 +8,29 @@
     </style>
     <!-- Page Header Start -->
         <div class="container-fluid bg-secondary mb-5">
-            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-                <h1 class="font-weight-semi-bold text-uppercase mb-3">Menu</h1>
-                <div class="d-inline-flex">
-                    <p class="m-0"><a href="index.php">Home</a></p>
-                    <p class="m-0 px-2">-</p>
-                    <p class="m-0">Menu</p>
+        <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 410px;">
+                            <img class="img-fluid" src="assets/img/banner1.jpg" alt="Image">
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="assets/img/banner2.jpg" alt="Image">
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="assets/img/banner3.png" alt="Image">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
                 </div>
-            </div>
         </div>
     <!-- Page Header End -->
     <!-- Shop Start -->

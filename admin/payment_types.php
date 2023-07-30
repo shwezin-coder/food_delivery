@@ -82,7 +82,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Payment Types <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addModal">Add Payment Types </button></h4>
+                <h4 class="card-title addbtn">Payment Types <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addModal">Add Payment Types </button></h4>
                 
               </div>
               <div class="card-body">
